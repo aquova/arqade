@@ -97,8 +97,11 @@ size_t SetAudioSampleBatchCallback(int16_t* aData, size_t aFrames) {
 Core::Core(std::string aGamePath, std::string aLibPath) : mGamePath(aGamePath), mLibPath(aLibPath) {
     mSavePath = aGamePath.substr(0, aGamePath.find_last_of('.')) + ".sav";
 
+    AvInfo av_info;
     InitCore();
     LoadGame();
+    mRetroGetSystemAvInfoFn(&av_info);
+    CoreData::getInstance().SetAvInfo(av_info);
     LoadSave();
 }
 
@@ -129,6 +132,7 @@ void Core::InitCore() {
     mRetroRunFn = reinterpret_cast<RetroRunType>(dlsym(mCoreLib, "retro_run"));
     mRetroGetMemoryDataFn = reinterpret_cast<RetroGetMemoryDataType>(dlsym(mCoreLib, "retro_get_memory_data"));
     mRetroGetMemorySizeFn = reinterpret_cast<RetroGetMemorySizeType>(dlsym(mCoreLib, "retro_get_memory_size"));
+    mRetroGetSystemAvInfoFn = reinterpret_cast<RetroGetSystemAvInfoType>(dlsym(mCoreLib, "retro_get_system_av_info"));
 
     const auto dlsym_error = dlerror();
     if (dlsym_error) {
@@ -139,6 +143,7 @@ void Core::InitCore() {
     if (api_version != LIBRETRO_VERSION) {
         std::cout << "Unexpect API version\n";
     }
+
     retro_set_environment(SetEnvCallback);
     retro_init();
     retro_set_video_refresh(SetVideoRefreshCallback);
@@ -146,7 +151,6 @@ void Core::InitCore() {
     retro_set_input_state(SetInputStateCallback);
     retro_set_audio_sample(SetAudioSampleCallback);
     retro_set_audio_sample_batch(SetAudioSampleBatchCallback);
-
 }
 
 void Core::LoadGame() {

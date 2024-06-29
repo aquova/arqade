@@ -10,14 +10,10 @@ class AudioPlayer {
     public:
         AudioPlayer();
         ~AudioPlayer();
-        void Kill();
-        void Run();
 
     private:
         std::vector<int16_t> mAudioBuffer;
         SDL_AudioDeviceID mAudioDevice;
-
-        bool mRunning{false};
 };
 
 #endif

@@ -48,4 +48,22 @@ struct GameInfo {
     const char* mMeta;
 };
 
+struct GameGeometry {
+    unsigned mBaseWidth;
+    unsigned mBaseHeight;
+    unsigned mMaxWidth;
+    unsigned mMaxHeight;
+    float mAspectRatio;
+};
+
+struct SystemTiming {
+    double mFps;
+    double mSampleRate;
+};
+
+struct AvInfo {
+    struct GameGeometry mGeometry;
+    struct SystemTiming mTiming;
+};
+
 #endif

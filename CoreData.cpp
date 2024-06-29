@@ -9,6 +9,10 @@ std::vector<int16_t> CoreData::GetAudioData() {
     return mAudioData;
 }
 
+AvInfo CoreData::GetAvInfo() {
+    return mAvInfo;
+}
+
 int CoreData::GetBytesPerPixel() {
     switch (mPixelFormat) {
         case PixelFormat::XRGB8888:
@@ -50,6 +54,10 @@ std::vector<uint8_t> CoreData::GetVideoData() {
 
 void CoreData::SetAudioData(std::vector<int16_t> aData) {
     mAudioData.insert(mAudioData.end(), aData.begin(), aData.end());
+}
+
+void CoreData::SetAvInfo(AvInfo aAvInfo) {
+    mAvInfo = aAvInfo;
 }
 
 void CoreData::SetButtonPress(const JoypadButton aButton, const bool aPressed) {

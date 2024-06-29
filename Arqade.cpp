@@ -1,7 +1,6 @@
 #include <SDL2/SDL_timer.h>
 
 #include <iostream>
-#include <thread>
 
 #include "AudioPlayer.hpp"
 #include "Core.hpp"
@@ -29,8 +28,6 @@ int main(int argc, char* argv[]) {
     Core core(rom_path, core_path);
 
     AudioPlayer audio_player;
-    std::thread audio_thread(&AudioPlayer::Run, &audio_player);
-
     VideoPlayer video_player(WIDTH, HEIGHT, SCALE);
 
     while (true) {
@@ -55,7 +52,5 @@ int main(int argc, char* argv[]) {
     }
 
     core.WriteSave();
-    audio_player.Kill();
-    audio_thread.join();
     return 0;
 }

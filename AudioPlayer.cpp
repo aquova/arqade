@@ -1,6 +1,5 @@
 #include "AudioPlayer.hpp"
 
-#include <SDL2/SDL_timer.h>
 #include <algorithm>
 #include <iostream>
 
@@ -8,21 +7,21 @@
 
 #include "CoreData.hpp"
 
-// TODO: Need to get sample rate from core
-static constexpr auto SAMPLE_RATE = 44100;
-static constexpr auto AMPLITUDE = 28000;
-static constexpr auto FREQ = 440;
-static constexpr auto SAMPLES = 4096;
-
 static void AudioCallback(void* aUserdata, uint8_t* aStream, int aLength) {
     CoreData& core_data = CoreData::getInstance();
     const auto buffer = core_data.GetAudioData();
-    if (buffer.size() == 0 || !aStream) {
-        return;
-    }
     const auto data_len = std::min(static_cast<size_t>(aLength), buffer.size());
-    memcpy(aStream, buffer.data(), data_len);
-    core_data.EraseAudioData(data_len);
+
+    if (data_len > 0) {
+        memcpy(aStream, buffer.data(), data_len);
+        // If we don't have enough data requested, pad
+        if (data_len < aLength) {
+            memset(aStream + data_len, 0, aLength - data_len);
+        }
+        core_data.EraseAudioData(data_len);
+    } else {
+        memset(aStream, 0, aLength);
+    }
 }
 
 AudioPlayer::AudioPlayer() {
@@ -31,7 +30,8 @@ AudioPlayer::AudioPlayer() {
     }
 
     SDL_AudioSpec desired_spec, obtained_spec;
-    desired_spec.freq = SAMPLE_RATE;
+    const auto av_info = CoreData::getInstance().GetAvInfo();
+    desired_spec.freq = av_info.mTiming.mSampleRate;
     desired_spec.format = AUDIO_S16;
     desired_spec.channels = 2;
     desired_spec.callback = AudioCallback;
@@ -49,15 +49,4 @@ AudioPlayer::AudioPlayer() {
 AudioPlayer::~AudioPlayer() {
     SDL_CloseAudioDevice(mAudioDevice);
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
-}
-
-void AudioPlayer::Kill() {
-    mRunning = false;
-}
-
-void AudioPlayer::Run() {
-    mRunning = true;
-    while (mRunning) {
-        SDL_Delay(100);
-    }
 }

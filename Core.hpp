@@ -10,6 +10,7 @@ typedef bool (*RetroLoadGame)(GameInfo* aGameInfo);
 typedef void (*RetroRunType)();
 typedef void* (*RetroGetMemoryDataType)(unsigned aId);
 typedef size_t (*RetroGetMemorySizeType)(unsigned aId);
+typedef void (*RetroGetSystemAvInfoType)(AvInfo* aInfo);
 
 class Core {
     public:
@@ -27,8 +28,10 @@ class Core {
         std::string mGamePath;
         std::string mSavePath;
         std::string mLibPath;
+
         RetroLoadGame mRetroLoadFn{nullptr};
         RetroRunType mRetroRunFn{nullptr};
+        RetroGetSystemAvInfoType mRetroGetSystemAvInfoFn{nullptr};
         RetroGetMemoryDataType mRetroGetMemoryDataFn{nullptr};
         RetroGetMemorySizeType mRetroGetMemorySizeFn{nullptr};
 };

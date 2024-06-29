@@ -17,6 +17,7 @@ class CoreData {
 
         void EraseAudioData(const size_t aLength);
         std::vector<int16_t> GetAudioData();
+        AvInfo GetAvInfo();
         int GetBytesPerPixel();
         PixelFormat GetPixelFormat();
         size_t GetScreenPitch();
@@ -25,6 +26,7 @@ class CoreData {
         std::vector<uint8_t> GetVideoData();
         bool IsButtonPressed(const JoypadButton aButton);
         void SetAudioData(std::vector<int16_t> aData);
+        void SetAvInfo(AvInfo aAvInfo);
         void SetButtonPress(const JoypadButton aButton, const bool aPressed);
         void SetScreenParams(const uint aWidth, const uint aHeight, const size_t aPitch);
         void SetPixelFormat(const PixelFormat aFormat);
@@ -37,11 +39,14 @@ class CoreData {
         CoreData& operator=(const CoreData&) = delete;
 
         std::mutex mMutex;
+
+        AvInfo mAvInfo;
         std::array<bool, JoypadButton::COUNT> mButtons;
         PixelFormat mPixelFormat{PixelFormat::UNKNOWN};
         uint mScreenHeight{0};
         size_t mScreenPitch{0};
         uint mScreenWidth{0};
+
         std::vector<int16_t> mAudioData;
         std::vector<uint8_t> mVideoData;
 };
