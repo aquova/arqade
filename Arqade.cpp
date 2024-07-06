@@ -1,7 +1,5 @@
 #include <SDL2/SDL_timer.h>
 
-#include <iostream>
-
 #include "AudioPlayer.hpp"
 #include "Core.hpp"
 #include "CoreData.hpp"
@@ -18,15 +16,8 @@ static constexpr auto SCALE = 3;
 static constexpr auto FPS = 60.0;
 static constexpr auto FRAME_DELAY = 1000.0 / FPS;
 
-int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cout << "Arqade: Qt Frontend for libretro\nUsage: arqade path/to/rom path/to/core.so\n";
-        return 1;
-    }
-    const auto rom_path = argv[1];
-    const auto core_path = argv[2];
-    Core core(rom_path, core_path);
-
+void RunEmu(std::string aRomPath, std::string aCorePath) {
+    Core core(aRomPath, aCorePath);
     AudioPlayer audio_player;
     VideoPlayer video_player(WIDTH, HEIGHT, SCALE);
 
@@ -52,5 +43,4 @@ int main(int argc, char* argv[]) {
     }
 
     core.WriteSave();
-    return 0;
 }
