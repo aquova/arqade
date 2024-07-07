@@ -6,83 +6,54 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>587</height>
+    <width>694</width>
+    <height>218</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Arqade</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QScrollArea" name="scrollArea">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>781</width>
-      <height>561</height>
-     </rect>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>779</width>
-       <height>559</height>
-      </rect>
-     </property>
-     <widget class="QWidget" name="gridLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>9</x>
-        <y>9</y>
-        <width>761</width>
-        <height>541</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="0">
-        <widget class="QLabel" name="coreLabel">
-         <property name="text">
-          <string>libretro Core Path</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLineEdit" name="romPathEdit"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="romButton">
-         <property name="text">
-          <string>Choose ROM</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="romLabel">
-         <property name="text">
-          <string>ROM Location</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QPushButton" name="startButton">
-         <property name="text">
-          <string>Begin</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QComboBox" name="coreBox"/>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <widget class="QLineEdit" name="romPathEdit"/>
+      </item>
+      <item row="5" column="0">
+       <widget class="QComboBox" name="coreBox"/>
+      </item>
+      <item row="6" column="0">
+       <widget class="QPushButton" name="startButton">
+        <property name="text">
+         <string>Begin</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="romLabel">
+        <property name="text">
+         <string>ROM Location</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="romButton">
+        <property name="text">
+         <string>Choose ROM</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="coreLabel">
+        <property name="text">
+         <string>libretro Core Path</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

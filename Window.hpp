@@ -21,9 +21,10 @@ class ArqadeWindow : public QMainWindow {
         void HandleRunButtonPressed();
 
     private:
+        void CreateConfig();
         void PopulateCores();
 
-        Ui::ArqadeWindow *mUi;
         bool mGameSelected{false};
+        Ui::ArqadeWindow *mUi;
 };
 #endif

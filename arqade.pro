@@ -1,4 +1,4 @@
-QT       += core gui
+QT += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +10,7 @@ SOURCES += \
     AudioPlayer.cpp \
     Core.cpp \
     CoreData.cpp \
+    Database.cpp \
     Utils.cpp \
     VideoPlayer.cpp \
     Window.cpp
@@ -19,6 +20,7 @@ HEADERS += \
     AudioPlayer.hpp \
     Core.hpp \
     CoreData.hpp \
+    Database.hpp \
     libretro.hpp \
     Utils.hpp \
     VideoPlayer.hpp \
