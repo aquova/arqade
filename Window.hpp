@@ -1,5 +1,5 @@
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef WINDOW_HPP
+#define WINDOW_HPP
 
 #include <QMainWindow>
 #include <QPushButton>
@@ -17,13 +17,13 @@ class ArqadeWindow : public QMainWindow {
         ~ArqadeWindow();
 
     private slots:
-        void HandleCoreButtonPressed();
         void HandleGameButtonPressed();
         void HandleRunButtonPressed();
 
     private:
+        void PopulateCores();
+
         Ui::ArqadeWindow *mUi;
-        bool mCoreSelected{false};
         bool mGameSelected{false};
 };
-#endif // WINDOW_H
+#endif

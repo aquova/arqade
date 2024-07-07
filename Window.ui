@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>ArqadeWindow</string>
+   <string>Arqade</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QScrollArea" name="scrollArea">
@@ -45,30 +45,6 @@
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QLabel" name="romLabel">
-         <property name="text">
-          <string>ROM Location</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="romButton">
-         <property name="text">
-          <string>Choose ROM</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLineEdit" name="corePathEdit"/>
-       </item>
-       <item row="8" column="0">
-        <widget class="QPushButton" name="startButton">
-         <property name="text">
-          <string>Begin</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0">
         <widget class="QLabel" name="coreLabel">
          <property name="text">
@@ -79,12 +55,29 @@
        <item row="2" column="0">
         <widget class="QLineEdit" name="romPathEdit"/>
        </item>
-       <item row="7" column="0">
-        <widget class="QPushButton" name="coreButton">
+       <item row="3" column="0">
+        <widget class="QPushButton" name="romButton">
          <property name="text">
-          <string>Choose Core</string>
+          <string>Choose ROM</string>
          </property>
         </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="romLabel">
+         <property name="text">
+          <string>ROM Location</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="startButton">
+         <property name="text">
+          <string>Begin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QComboBox" name="coreBox"/>
        </item>
       </layout>
      </widget>

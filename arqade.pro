@@ -22,7 +22,7 @@ HEADERS += \
     libretro.hpp \
     Utils.hpp \
     VideoPlayer.hpp \
-    Window.h
+    Window.hpp
 
 FORMS += \
     Window.ui
