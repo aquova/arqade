@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>694</width>
-    <height>218</height>
+    <width>896</width>
+    <height>633</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,45 +17,37 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="0">
-       <widget class="QLineEdit" name="romPathEdit"/>
-      </item>
-      <item row="5" column="0">
-       <widget class="QComboBox" name="coreBox"/>
+      <item row="0" column="0">
+       <widget class="QLabel" name="titleLabel">
+        <property name="text">
+         <string>Arqade</string>
+        </property>
+       </widget>
       </item>
       <item row="6" column="0">
-       <widget class="QPushButton" name="startButton">
-        <property name="text">
-         <string>Begin</string>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="currentIndex">
+         <number>0</number>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="romLabel">
-        <property name="text">
-         <string>ROM Location</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QPushButton" name="romButton">
-        <property name="text">
-         <string>Choose ROM</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="coreLabel">
-        <property name="text">
-         <string>libretro Core Path</string>
-        </property>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>+</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_3"/>
+        </widget>
        </widget>
       </item>
      </layout>
     </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="startButton">
+      <property name="text">
+       <string>Begin</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

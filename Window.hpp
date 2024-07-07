@@ -17,14 +17,13 @@ class ArqadeWindow : public QMainWindow {
         ~ArqadeWindow();
 
     private slots:
-        void HandleGameButtonPressed();
         void HandleRunButtonPressed();
 
     private:
+        void AddTab();
         void CreateConfig();
-        void PopulateCores();
+        void PopulateTabs();
 
-        bool mGameSelected{false};
         Ui::ArqadeWindow *mUi;
 };
 #endif

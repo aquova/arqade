@@ -2,6 +2,10 @@
 
 #include "CoreData.hpp"
 
+bool AlphabetCompare(std::string aLhs, std::string aRhs) {
+    return aLhs < aRhs;
+}
+
 std::vector<uint8_t> ConvertRGB1555ToRGB888(const std::vector<uint8_t> &aVector) {
     std::vector<uint8_t> output;
     const auto bytes_per_pixel = CoreData::getInstance().GetBytesPerPixel();
