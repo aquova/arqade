@@ -1,12 +1,13 @@
 #ifndef SYSTEMTAB_HPP
 #define SYSTEMTAB_HPP
 
-#include <filesystem>
 #include <vector>
 
 #include <QListWidgetItem>
 #include <QString>
 #include <QWidget>
+
+#include "Database.hpp"
 
 QT_BEGIN_NAMESPACE namespace Ui {
 class SystemTab;
@@ -17,24 +18,26 @@ class SystemTab :  public QWidget {
     Q_OBJECT
 
     public:
-        SystemTab(QWidget *aParent = nullptr, const std::string aTitle = "");
+        SystemTab(QWidget *aParent, const TabData aData, const std::vector<std::string> aCores);
         ~SystemTab();
         std::string GetSelectedCore();
         std::string GetSelectedGame();
-        void PopulateCores(const std::vector<std::string> &aCores, const int aIdx);
 
     signals:
         void UpdateTitle(QString aTitle);
 
     private slots:
+        void HandleCoreChanged(const QString &aText);
         void HandleGamePathButtonPressed();
         void HandleRefreshButtonPressed();
         void HandleUpdateTitleButtonPressed();
 
     private:
+        void LoadData();
+        void PopulateCores(const std::vector<std::string> &aCores);
         void UpdateGames();
 
-        std::vector<std::filesystem::path> mPaths;
+        TabData mData;
         Ui::SystemTab* mTab;
 };
 

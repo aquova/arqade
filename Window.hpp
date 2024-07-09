@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include <QString>
 
+#include "Database.hpp"
+
 QT_BEGIN_NAMESPACE namespace Ui {
 class ArqadeWindow;
 }
@@ -24,9 +26,9 @@ class ArqadeWindow : public QMainWindow {
         void HandleUpdateTitle(QString aTitle);
 
     private:
-        void AddTab(const std::string aTitle, const int aIdx);
+        void AddTab(const TabData aData);
         void CreateConfig();
-        void CreateDefaultTabs();
+        void CreateEmptyTab();
         void PopulateTabs();
 
         std::vector<std::string> mCores;

@@ -9,7 +9,6 @@
 #include "qobject.h"
 
 #include "Arqade.hpp"
-#include "Database.hpp"
 #include "SystemTab.hpp"
 
 static constexpr auto LIBRETRO_CORE_PATH = "/usr/lib/libretro/";
@@ -19,7 +18,7 @@ ArqadeWindow::ArqadeWindow(QWidget *parent): QMainWindow(parent), mUi(new Ui::Ar
     for (const auto& core : std::filesystem::directory_iterator(LIBRETRO_CORE_PATH)) {
         mCores.push_back(core.path().string());
     }
-    // CreateConfig();
+    CreateConfig();
     PopulateTabs();
 
     connect(mUi->addTabButton, &QPushButton::pressed, this, &ArqadeWindow::HandleAddTabPressed);
@@ -31,12 +30,11 @@ ArqadeWindow::~ArqadeWindow() {
     delete mUi;
 }
 
-void ArqadeWindow::AddTab(const std::string aTitle, const int aIdx) {
-    auto tab = new SystemTab(nullptr, aTitle);
-    tab->PopulateCores(mCores, aIdx);
-    mUi->tabWidget->addTab(tab, tr(aTitle.c_str()));
+void ArqadeWindow::AddTab(const TabData aData) {
+    auto tab = new SystemTab(nullptr, aData, mCores);
+    mUi->tabWidget->addTab(tab, aData.mTitle.c_str());
     connect(tab, &SystemTab::UpdateTitle, this, &ArqadeWindow::HandleUpdateTitle);
-    mUi->tabWidget->setCurrentIndex(0);
+    DbUpdateTab(aData);
 }
 
 void ArqadeWindow::CreateConfig() {
@@ -45,21 +43,21 @@ void ArqadeWindow::CreateConfig() {
         std::cout << "Creating config directory " << db_dir << std::endl;
         std::filesystem::create_directory(db_dir);
     }
-
-    const auto db_path = GetDatabasePath();
-    if (!std::filesystem::exists(db_path)) {
-        InitializeDb();
-    }
+    DbInitialize();
 }
 
-void ArqadeWindow::CreateDefaultTabs() {
-    for (size_t i = 0; i < mCores.size(); i++) {
-        AddTab(std::to_string(i + 1), i);
-    }
+void ArqadeWindow::CreateEmptyTab() {
+    const auto new_tab = TabData {
+        mUi->tabWidget->count(),
+        "NEW",
+        mCores[0],
+        ""
+    };
+    AddTab(new_tab);
 }
 
 void ArqadeWindow::HandleAddTabPressed() {
-    AddTab("New", 0);
+    CreateEmptyTab();
 }
 
 void ArqadeWindow::HandleDeleteTabPressed() {
@@ -79,5 +77,12 @@ void ArqadeWindow::HandleUpdateTitle(QString aTitle) {
 }
 
 void ArqadeWindow::PopulateTabs() {
-    CreateDefaultTabs();
+    const auto tabs = DbGetAllTabs();
+    if (tabs.size() > 0) {
+        for (const auto& tab : tabs) {
+            AddTab(tab);
+        }
+    } else {
+        CreateEmptyTab();
+    }
 }
