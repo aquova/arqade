@@ -1,12 +1,12 @@
 #include "Window.hpp"
-#include "qobject.h"
 #include "ui_Window.h"
 
-#include <QFileDialog>
-#include <QString>
 #include <filesystem>
 #include <iostream>
 #include <vector>
+
+#include <QString>
+#include "qobject.h"
 
 #include "Arqade.hpp"
 #include "Database.hpp"
@@ -35,7 +35,7 @@ void ArqadeWindow::AddTab(const std::string aTitle, const int aIdx) {
     auto tab = new SystemTab(nullptr, aTitle);
     tab->PopulateCores(mCores, aIdx);
     mUi->tabWidget->addTab(tab, tr(aTitle.c_str()));
-    connect(tab, &SystemTab::updateTitle, this, &ArqadeWindow::HandleUpdateTitle);
+    connect(tab, &SystemTab::UpdateTitle, this, &ArqadeWindow::HandleUpdateTitle);
     mUi->tabWidget->setCurrentIndex(0);
 }
 

@@ -14,6 +14,27 @@
    <string>Tab</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0" colspan="5">
+    <layout class="QHBoxLayout" name="nameLayout">
+     <item>
+      <widget class="QLabel" name="nameLabel">
+       <property name="text">
+        <string>Tab Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="nameText"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="nameUpdateButton">
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="10" column="2">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -27,52 +48,38 @@
      </property>
     </spacer>
    </item>
-   <item row="10" column="5">
+   <item row="8" column="0" colspan="5">
+    <widget class="QListWidget" name="gameListWidget"/>
+   </item>
+   <item row="10" column="4">
     <widget class="QPushButton" name="customizeControlsButton">
      <property name="text">
       <string>Customize Controls</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0" colspan="6">
-    <widget class="QListWidget" name="gameListWidget"/>
-   </item>
-   <item row="1" column="0" colspan="6">
-    <layout class="QHBoxLayout" name="nameLayout">
+   <item row="4" column="0" colspan="5">
+    <layout class="QHBoxLayout" name="pathLayout">
      <item>
-      <widget class="QLabel" name="nameLabel">
+      <widget class="QLabel" name="gamePathLabel">
        <property name="text">
-        <string>Tab Name</string>
+        <string>Game Folder</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="nameLineEdit"/>
+      <widget class="QLineEdit" name="gamePathText"/>
      </item>
      <item>
-      <widget class="QPushButton" name="nameUpdateButton">
+      <widget class="QPushButton" name="gamePathButton">
        <property name="text">
-        <string>Update</string>
+        <string>Choose Folder</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="10" column="1">
-    <widget class="QPushButton" name="refreshButton">
-     <property name="text">
-      <string>Refresh List</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="4">
-    <widget class="QPushButton" name="addPathButton">
-     <property name="text">
-      <string>Add Game Folder</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="6">
+   <item row="5" column="0" colspan="5">
     <layout class="QFormLayout" name="coreLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="coreLabel">
@@ -85,6 +92,13 @@
       <widget class="QComboBox" name="coreBox"/>
      </item>
     </layout>
+   </item>
+   <item row="10" column="0">
+    <widget class="QPushButton" name="refreshButton">
+     <property name="text">
+      <string>Refresh List</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

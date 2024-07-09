@@ -35,7 +35,7 @@ void InitializeDb() {
     }
 
     QSqlQuery query;
-    query.exec("CREATE TABLE IF NOT EXISTS tabs (id INTEGER PRIMARY KEY, name TEXT, core INTEGER, path TEXT)");
+    query.exec("CREATE TABLE IF NOT EXISTS tabs (id INTEGER PRIMARY KEY, name TEXT, core TEXT, path TEXT)");
     db.commit();
     db.close();
 }

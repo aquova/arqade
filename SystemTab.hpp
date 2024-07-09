@@ -24,17 +24,16 @@ class SystemTab :  public QWidget {
         void PopulateCores(const std::vector<std::string> &aCores, const int aIdx);
 
     signals:
-        void updateTitle(QString aTitle);
+        void UpdateTitle(QString aTitle);
 
     private slots:
+        void HandleGamePathButtonPressed();
         void HandleRefreshButtonPressed();
         void HandleUpdateTitleButtonPressed();
 
     private:
-        void PopulateList();
         void UpdateGames();
 
-        std::vector<std::string> mGames;
         std::vector<std::filesystem::path> mPaths;
         Ui::SystemTab* mTab;
 };
