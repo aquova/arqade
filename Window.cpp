@@ -2,20 +2,28 @@
 #include "qobject.h"
 #include "ui_Window.h"
 
-#include <filesystem>
 #include <QFileDialog>
 #include <QString>
+#include <filesystem>
 #include <iostream>
+#include <vector>
 
 #include "Arqade.hpp"
 #include "Database.hpp"
 #include "SystemTab.hpp"
 
+static constexpr auto LIBRETRO_CORE_PATH = "/usr/lib/libretro/";
+
 ArqadeWindow::ArqadeWindow(QWidget *parent): QMainWindow(parent), mUi(new Ui::ArqadeWindow) {
     mUi->setupUi(this);
+    for (const auto& core : std::filesystem::directory_iterator(LIBRETRO_CORE_PATH)) {
+        mCores.push_back(core.path().string());
+    }
     // CreateConfig();
     PopulateTabs();
 
+    connect(mUi->addTabButton, &QPushButton::pressed, this, &ArqadeWindow::HandleAddTabPressed);
+    connect(mUi->deleteTabButton, &QPushButton::pressed, this, &ArqadeWindow::HandleDeleteTabPressed);
     connect(mUi->startButton, &QPushButton::pressed, this, &ArqadeWindow::HandleRunButtonPressed);
 }
 
@@ -23,8 +31,12 @@ ArqadeWindow::~ArqadeWindow() {
     delete mUi;
 }
 
-void ArqadeWindow::AddTab() {
-
+void ArqadeWindow::AddTab(const std::string aTitle, const int aIdx) {
+    auto tab = new SystemTab(nullptr, aTitle);
+    tab->PopulateCores(mCores, aIdx);
+    mUi->tabWidget->addTab(tab, tr(aTitle.c_str()));
+    connect(tab, &SystemTab::updateTitle, this, &ArqadeWindow::HandleUpdateTitle);
+    mUi->tabWidget->setCurrentIndex(0);
 }
 
 void ArqadeWindow::CreateConfig() {
@@ -40,6 +52,20 @@ void ArqadeWindow::CreateConfig() {
     }
 }
 
+void ArqadeWindow::CreateDefaultTabs() {
+    for (size_t i = 0; i < mCores.size(); i++) {
+        AddTab(std::to_string(i + 1), i);
+    }
+}
+
+void ArqadeWindow::HandleAddTabPressed() {
+    AddTab("New", 0);
+}
+
+void ArqadeWindow::HandleDeleteTabPressed() {
+    mUi->tabWidget->removeTab(mUi->tabWidget->currentIndex());
+}
+
 void ArqadeWindow::HandleRunButtonPressed() {
     QWidget* current_widget = mUi->tabWidget->currentWidget();
     SystemTab* current_tab = qobject_cast<SystemTab*>(current_widget);
@@ -48,9 +74,10 @@ void ArqadeWindow::HandleRunButtonPressed() {
     RunEmu(romPath, corePath);
 }
 
+void ArqadeWindow::HandleUpdateTitle(QString aTitle) {
+    mUi->tabWidget->setTabText(mUi->tabWidget->currentIndex(), aTitle);
+}
+
 void ArqadeWindow::PopulateTabs() {
-    // TODO: Read from DB
-    auto tab = new SystemTab;
-    mUi->tabWidget->insertTab(0, tab, tr("Test"));
-    mUi->tabWidget->setCurrentIndex(0);
+    CreateDefaultTabs();
 }

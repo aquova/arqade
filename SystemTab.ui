@@ -14,21 +14,7 @@
    <string>Tab</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="9" column="2">
-    <widget class="QPushButton" name="addPathButton">
-     <property name="text">
-      <string>Add Game Folder</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="3">
-    <widget class="QPushButton" name="customizeControlsButton">
-     <property name="text">
-      <string>Customize Controls</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
+   <item row="10" column="2">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -41,18 +27,53 @@
      </property>
     </spacer>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="5">
+    <widget class="QPushButton" name="customizeControlsButton">
+     <property name="text">
+      <string>Customize Controls</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="6">
+    <widget class="QListWidget" name="gameListWidget"/>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <layout class="QHBoxLayout" name="nameLayout">
+     <item>
+      <widget class="QLabel" name="nameLabel">
+       <property name="text">
+        <string>Tab Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="nameLineEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="nameUpdateButton">
+       <property name="text">
+        <string>Update</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="10" column="1">
     <widget class="QPushButton" name="refreshButton">
      <property name="text">
       <string>Refresh List</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="4">
-    <widget class="QListWidget" name="gameListWidget"/>
+   <item row="10" column="4">
+    <widget class="QPushButton" name="addPathButton">
+     <property name="text">
+      <string>Add Game Folder</string>
+     </property>
+    </widget>
    </item>
-   <item row="1" column="0" colspan="4">
-    <layout class="QFormLayout" name="formLayout">
+   <item row="2" column="0" colspan="6">
+    <layout class="QFormLayout" name="coreLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="coreLabel">
        <property name="text">

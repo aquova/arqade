@@ -2,19 +2,22 @@
 #include "ui_SystemTab.h"
 
 #include <filesystem>
+#include <QPushButton>
 
 #include "Utils.hpp"
 
-static constexpr auto LIBRETRO_CORE_PATH = "/usr/lib/libretro/";
-
-SystemTab::SystemTab(QWidget* aParent): QWidget(aParent), mTab(new Ui::SystemTab) {
+SystemTab::SystemTab(QWidget* aParent, const std::string aTitle): QWidget(aParent), mTab(new Ui::SystemTab) {
+    // static constexpr auto DEBUG_PATH = "/home/aquova/games/roms/gba";
     static constexpr auto DEBUG_PATH = "/beta/roms/gba";
 
     mTab->setupUi(this);
-    PopulateCores();
+    mTab->nameLineEdit->setPlaceholderText(aTitle.c_str());
     mPaths.push_back(DEBUG_PATH);
     UpdateGames();
     PopulateList();
+
+    connect(mTab->refreshButton, &QPushButton::pressed, this, &SystemTab::HandleRefreshButtonPressed);
+    connect(mTab->nameUpdateButton, &QPushButton::pressed, this, &SystemTab::HandleUpdateTitleButtonPressed);
 }
 
 SystemTab::~SystemTab() {
@@ -29,11 +32,20 @@ std::string SystemTab::GetSelectedGame() {
     return mTab->gameListWidget->currentItem()->text().toStdString();
 }
 
-void SystemTab::PopulateCores() {
-    for (const auto& core : std::filesystem::directory_iterator(LIBRETRO_CORE_PATH)) {
-        const auto qstr = QString(core.path().c_str());
-        mTab->coreBox->addItem(qstr);
+void SystemTab::HandleRefreshButtonPressed() {
+    UpdateGames();
+}
+
+void SystemTab::HandleUpdateTitleButtonPressed() {
+    const auto title = mTab->nameLineEdit->text();
+    emit updateTitle(title);
+}
+
+void SystemTab::PopulateCores(const std::vector<std::string> &aCores, const int aIdx) {
+    for (const auto& core : aCores) {
+        mTab->coreBox->addItem(core.c_str());
     }
+    mTab->coreBox->setCurrentIndex(aIdx);
 }
 
 void SystemTab::PopulateList() {

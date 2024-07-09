@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QString>
 
 QT_BEGIN_NAMESPACE namespace Ui {
 class ArqadeWindow;
@@ -17,13 +18,18 @@ class ArqadeWindow : public QMainWindow {
         ~ArqadeWindow();
 
     private slots:
+        void HandleAddTabPressed();
+        void HandleDeleteTabPressed();
         void HandleRunButtonPressed();
+        void HandleUpdateTitle(QString aTitle);
 
     private:
-        void AddTab();
+        void AddTab(const std::string aTitle, const int aIdx);
         void CreateConfig();
+        void CreateDefaultTabs();
         void PopulateTabs();
 
+        std::vector<std::string> mCores;
         Ui::ArqadeWindow *mUi;
 };
 #endif

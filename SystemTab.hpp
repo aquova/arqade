@@ -4,8 +4,9 @@
 #include <filesystem>
 #include <vector>
 
-#include <QWidget>
 #include <QListWidgetItem>
+#include <QString>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE namespace Ui {
 class SystemTab;
@@ -16,13 +17,20 @@ class SystemTab :  public QWidget {
     Q_OBJECT
 
     public:
-        SystemTab(QWidget *aParent = nullptr);
+        SystemTab(QWidget *aParent = nullptr, const std::string aTitle = "");
         ~SystemTab();
         std::string GetSelectedCore();
         std::string GetSelectedGame();
+        void PopulateCores(const std::vector<std::string> &aCores, const int aIdx);
+
+    signals:
+        void updateTitle(QString aTitle);
+
+    private slots:
+        void HandleRefreshButtonPressed();
+        void HandleUpdateTitleButtonPressed();
 
     private:
-        void PopulateCores();
         void PopulateList();
         void UpdateGames();
 
