@@ -1,6 +1,7 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
+#include <QListWidgetItem>
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
@@ -22,8 +23,8 @@ class ArqadeWindow : public QMainWindow {
     private slots:
         void HandleAddTabPressed();
         void HandleDeleteTabPressed();
-        void HandleRunButtonPressed();
         void HandleUpdateTitle(QString aTitle);
+        void RunSelectedGame();
 
     private:
         void AddTab(const TabData aData);

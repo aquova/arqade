@@ -24,11 +24,13 @@ class SystemTab :  public QWidget {
         std::string GetSelectedGame();
 
     signals:
+        void RunSelected();
         void UpdateTitle(QString aTitle);
 
     private slots:
         void HandleCoreChanged(const QString &aText);
         void HandleGamePathButtonPressed();
+        void HandleItemDoubleClicked();
         void HandleRefreshButtonPressed();
         void HandleUpdateTitle();
 

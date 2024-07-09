@@ -23,7 +23,7 @@ ArqadeWindow::ArqadeWindow(QWidget *parent): QMainWindow(parent), mUi(new Ui::Ar
 
     connect(mUi->addTabButton, &QPushButton::pressed, this, &ArqadeWindow::HandleAddTabPressed);
     connect(mUi->deleteTabButton, &QPushButton::pressed, this, &ArqadeWindow::HandleDeleteTabPressed);
-    connect(mUi->startButton, &QPushButton::pressed, this, &ArqadeWindow::HandleRunButtonPressed);
+    connect(mUi->startButton, &QPushButton::pressed, this, &ArqadeWindow::RunSelectedGame);
 }
 
 ArqadeWindow::~ArqadeWindow() {
@@ -33,6 +33,7 @@ ArqadeWindow::~ArqadeWindow() {
 void ArqadeWindow::AddTab(const TabData aData) {
     auto tab = new SystemTab(nullptr, aData, mCores);
     mUi->tabWidget->addTab(tab, aData.mTitle.c_str());
+    connect(tab, &SystemTab::RunSelected, this, &ArqadeWindow::RunSelectedGame);
     connect(tab, &SystemTab::UpdateTitle, this, &ArqadeWindow::HandleUpdateTitle);
     DbUpdateTab(aData);
 }
@@ -64,14 +65,6 @@ void ArqadeWindow::HandleDeleteTabPressed() {
     mUi->tabWidget->removeTab(mUi->tabWidget->currentIndex());
 }
 
-void ArqadeWindow::HandleRunButtonPressed() {
-    QWidget* current_widget = mUi->tabWidget->currentWidget();
-    SystemTab* current_tab = qobject_cast<SystemTab*>(current_widget);
-    const auto romPath = current_tab->GetSelectedGame();
-    const auto corePath = current_tab->GetSelectedCore();
-    RunEmu(romPath, corePath);
-}
-
 void ArqadeWindow::HandleUpdateTitle(QString aTitle) {
     mUi->tabWidget->setTabText(mUi->tabWidget->currentIndex(), aTitle);
 }
@@ -85,4 +78,12 @@ void ArqadeWindow::PopulateTabs() {
     } else {
         CreateEmptyTab();
     }
+}
+
+void ArqadeWindow::RunSelectedGame() {
+    QWidget* current_widget = mUi->tabWidget->currentWidget();
+    SystemTab* current_tab = qobject_cast<SystemTab*>(current_widget);
+    const auto romPath = current_tab->GetSelectedGame();
+    const auto corePath = current_tab->GetSelectedCore();
+    RunEmu(romPath, corePath);
 }

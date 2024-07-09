@@ -19,6 +19,7 @@ SystemTab::SystemTab(QWidget* aParent, const TabData aData, const std::vector<st
     connect(mTab->gamePathButton, &QPushButton::pressed, this, &SystemTab::HandleGamePathButtonPressed);
     connect(mTab->refreshButton, &QPushButton::pressed, this, &SystemTab::HandleRefreshButtonPressed);
     connect(mTab->nameText, &QLineEdit::returnPressed, this, &SystemTab::HandleUpdateTitle);
+    connect(mTab->gameListWidget, &QListWidget::itemDoubleClicked, this, &SystemTab::HandleItemDoubleClicked);
 }
 
 SystemTab::~SystemTab() {
@@ -46,6 +47,10 @@ void SystemTab::HandleGamePathButtonPressed() {
         DbUpdateTab(mData);
         UpdateGames();
     }
+}
+
+void SystemTab::HandleItemDoubleClicked() {
+    emit RunSelected();
 }
 
 void SystemTab::HandleRefreshButtonPressed() {

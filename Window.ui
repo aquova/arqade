@@ -56,7 +56,7 @@
     <item row="2" column="0" colspan="4">
      <widget class="QPushButton" name="startButton">
       <property name="text">
-       <string>Begin</string>
+       <string>Play!</string>
       </property>
      </widget>
     </item>
