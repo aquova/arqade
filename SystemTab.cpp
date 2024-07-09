@@ -5,6 +5,7 @@
 
 #include <QComboBox>
 #include <QFileDialog>
+#include <QLineEdit>
 #include <QPushButton>
 
 #include "Utils.hpp"
@@ -17,7 +18,7 @@ SystemTab::SystemTab(QWidget* aParent, const TabData aData, const std::vector<st
     connect(mTab->coreBox, &QComboBox::currentTextChanged, this, &SystemTab::HandleCoreChanged);
     connect(mTab->gamePathButton, &QPushButton::pressed, this, &SystemTab::HandleGamePathButtonPressed);
     connect(mTab->refreshButton, &QPushButton::pressed, this, &SystemTab::HandleRefreshButtonPressed);
-    connect(mTab->nameUpdateButton, &QPushButton::pressed, this, &SystemTab::HandleUpdateTitleButtonPressed);
+    connect(mTab->nameText, &QLineEdit::returnPressed, this, &SystemTab::HandleUpdateTitle);
 }
 
 SystemTab::~SystemTab() {
@@ -48,26 +49,18 @@ void SystemTab::HandleGamePathButtonPressed() {
 }
 
 void SystemTab::HandleRefreshButtonPressed() {
-    // If the user has typed anything into the text field, grab that as our (potential) path
-    // Otherwise, we'll keep the paths as is and just refresh the list
-    const auto dir_path = mTab->gamePathText->text();
-    if (dir_path != "") {
-        mData.mPath = dir_path.toStdString();
-    }
     UpdateGames();
 }
 
-void SystemTab::HandleUpdateTitleButtonPressed() {
+void SystemTab::HandleUpdateTitle() {
     const auto title = mTab->nameText->text();
     mData.mTitle = title.toStdString();
-    mTab->nameText->setText("");
-    mTab->nameText->setPlaceholderText(title);
     emit UpdateTitle(title);
     DbUpdateTab(mData);
 }
 
 void SystemTab::LoadData() {
-    mTab->nameText->setPlaceholderText(mData.mTitle.c_str());
+    mTab->nameText->setText(mData.mTitle.c_str());
     mTab->gamePathText->setText(mData.mPath.c_str());
     // TODO: Need to see what happens if core is deleted and no longer in list
     mTab->coreBox->setCurrentText(mData.mCore.c_str());

@@ -26,13 +26,6 @@
      <item>
       <widget class="QLineEdit" name="nameText"/>
      </item>
-     <item>
-      <widget class="QPushButton" name="nameUpdateButton">
-       <property name="text">
-        <string>Update</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item row="10" column="2">
@@ -68,7 +61,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="gamePathText"/>
+      <widget class="QLineEdit" name="gamePathText">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="gamePathButton">

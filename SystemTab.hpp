@@ -30,7 +30,7 @@ class SystemTab :  public QWidget {
         void HandleCoreChanged(const QString &aText);
         void HandleGamePathButtonPressed();
         void HandleRefreshButtonPressed();
-        void HandleUpdateTitleButtonPressed();
+        void HandleUpdateTitle();
 
     private:
         void LoadData();
