@@ -22,6 +22,7 @@ class SystemTab :  public QWidget {
         ~SystemTab();
         std::string GetSelectedCore();
         std::string GetSelectedGame();
+        std::string GetTabFolder();
 
     signals:
         void RunSelected();

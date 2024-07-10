@@ -34,6 +34,10 @@ std::string SystemTab::GetSelectedGame() {
     return mTab->gameListWidget->currentItem()->text().toStdString();
 }
 
+std::string SystemTab::GetTabFolder() {
+    return mData.mPath;
+}
+
 void SystemTab::HandleCoreChanged(const QString &aText) {
     mData.mCore = aText.toStdString();
     DbUpdateTab(mData);

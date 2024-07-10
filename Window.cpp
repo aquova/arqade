@@ -93,7 +93,9 @@ void ArqadeWindow::PopulateTabs() {
 void ArqadeWindow::RunSelectedGame() {
     QWidget* current_widget = mUi->tabWidget->currentWidget();
     SystemTab* current_tab = qobject_cast<SystemTab*>(current_widget);
-    const auto romPath = current_tab->GetSelectedGame();
-    const auto corePath = current_tab->GetSelectedCore();
-    emit RunEmu(romPath.c_str(), corePath.c_str());
+    const auto dir_path = std::filesystem::path(current_tab->GetTabFolder());
+    const auto rom_name = current_tab->GetSelectedGame();
+    const auto abs_path = dir_path / rom_name;
+    const auto core_path = current_tab->GetSelectedCore();
+    emit RunEmu(abs_path.c_str(), core_path.c_str());
 }
