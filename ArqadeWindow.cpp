@@ -1,4 +1,4 @@
-#include "Window.hpp"
+#include "ArqadeWindow.hpp"
 #include "ui_Window.h"
 
 #include <filesystem>

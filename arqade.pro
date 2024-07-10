@@ -8,17 +8,18 @@ CONFIG += debug_and_release
 SOURCES += \
     main.cpp \
     Arqade.cpp \
+    ArqadeWindow.cpp \
     AudioPlayer.cpp \
     Core.cpp \
     CoreData.cpp \
     Database.cpp \
     SystemTab.cpp \
     Utils.cpp \
-    VideoPlayer.cpp \
-    Window.cpp
+    VideoPlayer.cpp
 
 HEADERS += \
     Arqade.hpp \
+    ArqadeWindow.hpp \
     AudioPlayer.hpp \
     Core.hpp \
     CoreData.hpp \
@@ -27,11 +28,10 @@ HEADERS += \
     SystemTab.hpp \
     Utils.hpp \
     VideoPlayer.hpp \
-    Window.hpp
 
 FORMS += \
-    SystemTab.ui \
-    Window.ui
+    ArqadeWindow.ui \
+    SystemTab.ui
 
 INCLUDEPATH += /usr/include/SDL2
 
