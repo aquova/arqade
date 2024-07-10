@@ -15,12 +15,18 @@ static constexpr auto LIBRETRO_CORE_PATH = "/usr/lib/libretro/";
 
 ArqadeWindow::ArqadeWindow(QWidget *parent): QMainWindow(parent), mUi(new Ui::ArqadeWindow) {
     mUi->setupUi(this);
+    mEmulator = new Arqade;
+    mEmuThread = new QThread;
+    mEmulator->moveToThread(mEmuThread);
+    mEmuThread->start();
+
     for (const auto& core : std::filesystem::directory_iterator(LIBRETRO_CORE_PATH)) {
         mCores.push_back(core.path().string());
     }
     CreateConfig();
     PopulateTabs();
 
+    connect(this, &ArqadeWindow::RunEmu, mEmulator, &Arqade::RunEmu);
     connect(mUi->addTabButton, &QPushButton::pressed, this, &ArqadeWindow::HandleAddTabPressed);
     connect(mUi->deleteTabButton, &QPushButton::pressed, this, &ArqadeWindow::HandleDeleteTabPressed);
     connect(mUi->startButton, &QPushButton::pressed, this, &ArqadeWindow::RunSelectedGame);
@@ -28,6 +34,10 @@ ArqadeWindow::ArqadeWindow(QWidget *parent): QMainWindow(parent), mUi(new Ui::Ar
 
 ArqadeWindow::~ArqadeWindow() {
     delete mUi;
+    mEmuThread->quit();
+    mEmuThread->wait();
+    delete mEmuThread;
+    delete mEmulator;
 }
 
 void ArqadeWindow::AddTab(const TabData aData) {
@@ -85,5 +95,5 @@ void ArqadeWindow::RunSelectedGame() {
     SystemTab* current_tab = qobject_cast<SystemTab*>(current_widget);
     const auto romPath = current_tab->GetSelectedGame();
     const auto corePath = current_tab->GetSelectedCore();
-    RunEmu(romPath, corePath);
+    emit RunEmu(romPath.c_str(), corePath.c_str());
 }

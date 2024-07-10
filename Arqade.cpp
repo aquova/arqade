@@ -1,4 +1,7 @@
+#include "Arqade.hpp"
+
 #include <SDL2/SDL_timer.h>
+#include <QString>
 
 #include "AudioPlayer.hpp"
 #include "Core.hpp"
@@ -16,8 +19,8 @@ static constexpr auto SCALE = 3;
 static constexpr auto FPS = 60.0;
 static constexpr auto FRAME_DELAY = 1000.0 / FPS;
 
-void RunEmu(std::string aRomPath, std::string aCorePath) {
-    Core core(aRomPath, aCorePath);
+void Arqade::RunEmu(QString aRomPath, QString aCorePath) {
+    Core core(aRomPath.toStdString(), aCorePath.toStdString());
     AudioPlayer audio_player;
     VideoPlayer video_player(WIDTH, HEIGHT, SCALE);
 

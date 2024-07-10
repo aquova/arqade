@@ -92,6 +92,7 @@ void SystemTab::UpdateGames() {
         }
     }
     std::sort(games.begin(), games.end(), AlphabetCompare);
+    mTab->gameListWidget->clear();
     for (const auto& game : games) {
         const auto qstr = QString(game.c_str());
         mTab->gameListWidget->addItem(qstr);

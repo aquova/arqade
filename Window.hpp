@@ -5,7 +5,9 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QString>
+#include <QThread>
 
+#include "Arqade.hpp"
 #include "Database.hpp"
 
 QT_BEGIN_NAMESPACE namespace Ui {
@@ -20,6 +22,9 @@ class ArqadeWindow : public QMainWindow {
         ArqadeWindow(QWidget *parent = nullptr);
         ~ArqadeWindow();
 
+    signals:
+        void RunEmu(const QString &aRomPath, const QString &aCorePath);
+
     private slots:
         void HandleAddTabPressed();
         void HandleDeleteTabPressed();
@@ -32,7 +37,9 @@ class ArqadeWindow : public QMainWindow {
         void CreateEmptyTab();
         void PopulateTabs();
 
+        Arqade* mEmulator;
         std::vector<std::string> mCores;
+        QThread* mEmuThread;
         Ui::ArqadeWindow *mUi;
 };
 #endif
