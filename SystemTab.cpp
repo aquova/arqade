@@ -88,7 +88,7 @@ void SystemTab::UpdateGames() {
     std::vector<std::string> games;
     for (const auto& file : std::filesystem::directory_iterator(mData.mPath)) {
         if (file.path().extension() != SAVE_EXT) {
-            games.push_back(file.path().string());
+            games.push_back(file.path().filename().string());
         }
     }
     std::sort(games.begin(), games.end(), AlphabetCompare);
