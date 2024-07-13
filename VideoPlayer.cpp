@@ -70,19 +70,19 @@ Hotkey VideoPlayer::HandleButton(const SDL_Keycode aKey, const bool aPressed) {
             break;
 
         case SDLK_z:
-            button = JoypadButton::B;
+            button = JoypadButton::SOUTH;
             break;
 
         case SDLK_x:
-            button = JoypadButton::A;
+            button = JoypadButton::EAST;
             break;
 
         case SDLK_s:
-            button = JoypadButton::X;
+            button = JoypadButton::NORTH;
             break;
 
         case SDLK_a:
-            button = JoypadButton::Y;
+            button = JoypadButton::WEST;
             break;
 
         case SDLK_q:

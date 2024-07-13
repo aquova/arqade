@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 
+#include "KeybindWindow.hpp"
 #include "Utils.hpp"
 
 SystemTab::SystemTab(QWidget* aParent, const TabData aData, const std::vector<std::string> aCores): QWidget(aParent), mData(aData), mTab(new Ui::SystemTab) {
@@ -16,6 +17,7 @@ SystemTab::SystemTab(QWidget* aParent, const TabData aData, const std::vector<st
     LoadData();
 
     connect(mTab->coreBox, &QComboBox::currentTextChanged, this, &SystemTab::HandleCoreChanged);
+    connect(mTab->customizeControlsButton, &QPushButton::pressed, this, &SystemTab::HandleControlsButtonPressed);
     connect(mTab->gamePathButton, &QPushButton::pressed, this, &SystemTab::HandleGamePathButtonPressed);
     connect(mTab->refreshButton, &QPushButton::pressed, this, &SystemTab::HandleRefreshButtonPressed);
     connect(mTab->nameText, &QLineEdit::returnPressed, this, &SystemTab::HandleUpdateTitle);
@@ -38,6 +40,15 @@ std::string SystemTab::GetTabFolder() {
     return mData.mPath;
 }
 
+void SystemTab::HandleControlsButtonPressed() {
+    if (!mPopupShowing) {
+        const auto popup = new KeybindWindow;
+        connect(popup, &KeybindWindow::WindowClosing, this, &SystemTab::HandlePopupClose);
+        popup->show();
+        mPopupShowing = true;
+    }
+}
+
 void SystemTab::HandleCoreChanged(const QString &aText) {
     mData.mCore = aText.toStdString();
     DbUpdateTab(mData);
@@ -55,6 +66,10 @@ void SystemTab::HandleGamePathButtonPressed() {
 
 void SystemTab::HandleItemDoubleClicked() {
     emit RunSelected();
+}
+
+void SystemTab::HandlePopupClose() {
+    mPopupShowing = false;
 }
 
 void SystemTab::HandleRefreshButtonPressed() {

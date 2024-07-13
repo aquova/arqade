@@ -41,7 +41,7 @@ class CoreData {
         std::mutex mMutex;
 
         AvInfo mAvInfo;
-        std::array<bool, JoypadButton::COUNT> mButtons;
+        std::array<bool, static_cast<int>(JoypadButton::COUNT)> mButtons;
         PixelFormat mPixelFormat{PixelFormat::UNKNOWN};
         uint mScreenHeight{0};
         size_t mScreenPitch{0};

@@ -10,7 +10,7 @@ std::vector<uint8_t> ConvertRGB1555ToRGB888(const std::vector<uint8_t> &aVector)
     std::vector<uint8_t> output;
     const auto bytes_per_pixel = CoreData::getInstance().GetBytesPerPixel();
 
-    for (int i = 0; i < aVector.size(); i += bytes_per_pixel) {
+    for (size_t i = 0; i < aVector.size(); i += bytes_per_pixel) {
         const auto first = aVector.at(i);
         const auto second = aVector.at(i + 1);
 
@@ -34,7 +34,7 @@ std::vector<uint8_t> ConvertRGB565ToRGB888(const std::vector<uint8_t> &aVector) 
     std::vector<uint8_t> output;
     const auto bytes_per_pixel = CoreData::getInstance().GetBytesPerPixel();
 
-    for (int i = 0; i < aVector.size(); i += bytes_per_pixel) {
+    for (size_t i = 0; i < aVector.size(); i += bytes_per_pixel) {
         // I assume this is an endian thing
         const auto second = aVector.at(i);
         const auto first = aVector.at(i + 1);
@@ -59,7 +59,7 @@ std::vector<uint8_t> ConvertRGB8888ToRGB888(const std::vector<uint8_t> &aVector)
     std::vector<uint8_t> output;
     const auto bytes_per_pixel = CoreData::getInstance().GetBytesPerPixel();
 
-    for (int i = 0; i < aVector.size(); i += bytes_per_pixel) {
+    for (size_t i = 0; i < aVector.size(); i += bytes_per_pixel) {
         // Despite what XRGB8888 might imply, it's actually XBGR8888
         output.push_back(aVector.at(i + 2));
         output.push_back(aVector.at(i + 1));

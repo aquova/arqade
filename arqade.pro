@@ -13,6 +13,7 @@ SOURCES += \
     Core.cpp \
     CoreData.cpp \
     Database.cpp \
+    KeybindWindow.cpp \
     SystemTab.cpp \
     Utils.cpp \
     VideoPlayer.cpp
@@ -25,12 +26,14 @@ HEADERS += \
     CoreData.hpp \
     Database.hpp \
     libretro.hpp \
+    KeybindWindow.hpp \
     SystemTab.hpp \
     Utils.hpp \
     VideoPlayer.hpp \
 
 FORMS += \
     ArqadeWindow.ui \
+    KeybindWindow.ui \
     SystemTab.ui
 
 INCLUDEPATH += /usr/include/SDL2

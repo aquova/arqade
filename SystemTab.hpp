@@ -29,9 +29,11 @@ class SystemTab :  public QWidget {
         void UpdateTitle(QString aTitle);
 
     private slots:
+        void HandleControlsButtonPressed();
         void HandleCoreChanged(const QString &aText);
         void HandleGamePathButtonPressed();
         void HandleItemDoubleClicked();
+        void HandlePopupClose();
         void HandleRefreshButtonPressed();
         void HandleUpdateTitle();
 
@@ -41,6 +43,7 @@ class SystemTab :  public QWidget {
         void UpdateGames();
 
         TabData mData;
+        bool mPopupShowing{false};
         Ui::SystemTab* mTab;
 };
 

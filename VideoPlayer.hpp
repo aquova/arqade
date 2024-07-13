@@ -11,7 +11,7 @@
 
 #include "libretro.hpp"
 
-enum Hotkey {
+enum class Hotkey {
     None,
     Quit,
     Reset,

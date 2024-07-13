@@ -45,7 +45,7 @@ uint CoreData::GetScreenWidth() {
 }
 
 bool CoreData::IsButtonPressed(const JoypadButton aButton) {
-    return mButtons[aButton];
+    return mButtons[static_cast<int>(aButton)];
 }
 
 std::vector<uint8_t> CoreData::GetVideoData() {
@@ -61,7 +61,7 @@ void CoreData::SetAvInfo(AvInfo aAvInfo) {
 }
 
 void CoreData::SetButtonPress(const JoypadButton aButton, const bool aPressed) {
-    mButtons[aButton] = aPressed;
+    mButtons[static_cast<int>(aButton)] = aPressed;
 }
 
 void CoreData::SetPixelFormat(const PixelFormat aFormat) {

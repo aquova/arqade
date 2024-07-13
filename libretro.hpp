@@ -13,18 +13,17 @@ constexpr auto RETRO_ENV_SET_PIXEL_FORMAT = 10;
 
 constexpr auto RETRO_MEMORY_SAVE_RAM = 0;
 
-// Joypad is laid out like SNES controller
-enum JoypadButton {
-    B,
-    Y,
+enum class JoypadButton {
+    SOUTH,
+    WEST,
     SELECT,
     START,
     UP,
     DOWN,
     LEFT,
     RIGHT,
-    A,
-    X,
+    EAST,
+    NORTH,
     L,
     R,
     L2,
@@ -34,7 +33,7 @@ enum JoypadButton {
     COUNT,
 };
 
-enum PixelFormat {
+enum class PixelFormat {
     RGB1555 = 0,
     XRGB8888 = 1,
     RGB565 = 2,
