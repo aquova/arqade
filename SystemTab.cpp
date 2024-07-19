@@ -42,7 +42,7 @@ std::string SystemTab::GetTabFolder() {
 
 void SystemTab::HandleControlsButtonPressed() {
     if (!mPopupShowing) {
-        const auto popup = new KeybindWindow;
+        const auto popup = new KeybindWindow(mData.mId);
         connect(popup, &KeybindWindow::WindowClosing, this, &SystemTab::HandlePopupClose);
         popup->show();
         mPopupShowing = true;

@@ -4,6 +4,10 @@
 #include <filesystem>
 #include <vector>
 
+#include <Qt>
+
+#include "ControllerData.hpp"
+
 struct TabData {
     int mId;
     std::string mTitle;
@@ -13,9 +17,12 @@ struct TabData {
 
 void DbDeleteTab(const int aIdx);
 std::vector<TabData> DbGetAllTabs();
+ControllerType DbGetControllerType(const int aTab);
+std::vector<Qt::Key> DbGetKeybind(const int aTab, const ControllerType aType);
 std::filesystem::path GetConfigDir();
 std::filesystem::path GetDatabasePath();
 void DbInitialize();
+void DbUpdateKeybind(const int aTab, const ControllerData aData);
 void DbUpdateTab(const TabData aData);
 
 #endif

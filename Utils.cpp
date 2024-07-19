@@ -68,3 +68,10 @@ std::vector<uint8_t> ConvertRGB8888ToRGB888(const std::vector<uint8_t> &aVector)
 
     return output;
 }
+
+std::string Join(std::string aLhs, std::string aRhs, std::string aDelim) {
+    if (aLhs.empty()) {
+        return aRhs;
+    }
+    return aLhs + aDelim + aRhs;
+}

@@ -1,16 +1,21 @@
 #include "KeybindWindow.hpp"
 #include "ui_KeybindWindow.h"
 
+#include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QComboBox>
+#include <QPushButton>
 #include <QVBoxLayout>
 
-KeybindWindow::KeybindWindow(ControllerType aType, QWidget* aParent) : QWidget(aParent), mControllerType(aType), mUi(new Ui::KeybindWindow) {
+#include "Database.hpp"
+
+KeybindWindow::KeybindWindow(const int aTabIndex, QWidget* aParent) : QWidget(aParent), mTabIndex(aTabIndex), mUi(new Ui::KeybindWindow) {
     mUi->setupUi(this);
+    mData.mType = DbGetControllerType(mTabIndex);
     PopulateControllers();
 
     connect(mUi->controllerComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &KeybindWindow::HandleControllerChanged);
+    connect(mUi->saveButton, &QPushButton::pressed, this, &KeybindWindow::HandleSaveButtonPressed);
 }
 
 KeybindWindow::~KeybindWindow() {
@@ -29,6 +34,8 @@ bool KeybindWindow::eventFilter(QObject* aObject, QEvent* aEvent) {
         if (!txt.isEmpty()) {
             mPressedButton->setText(txt);
             mPressedButton->removeEventFilter(this);
+            const auto index = mPressedButton->property("index").toInt();
+            mData.mButtons[index] = static_cast<Qt::Key>(key_event->key());
             mPressedButton = nullptr;
             return true;
         }
@@ -37,7 +44,9 @@ bool KeybindWindow::eventFilter(QObject* aObject, QEvent* aEvent) {
 }
 
 void KeybindWindow::HandleControllerChanged(int aIdx) {
-    LoadControllerLayout(aIdx);
+    mData.mType = static_cast<ControllerType>(aIdx);
+    mData.mButtons.clear();
+    LoadControllerLayout();
 }
 
 void KeybindWindow::HandleKeyListenPressed() {
@@ -48,16 +57,30 @@ void KeybindWindow::HandleKeyListenPressed() {
     }
 }
 
-void KeybindWindow::LoadControllerLayout(const int aIdx) {
+void KeybindWindow::HandleSaveButtonPressed() {
+    DbUpdateKeybind(mTabIndex, mData);
+    close();
+}
+
+void KeybindWindow::LoadControllerLayout() {
+    mData.mButtons = DbGetKeybind(mTabIndex, mData.mType);
+    const auto controller_info = ControllerTable[static_cast<int>(mData.mType)];
+
     QWidget* controller_widget = new QWidget;
     QVBoxLayout* v_box = new QVBoxLayout(controller_widget);
-    const auto controller_info = ControllerTable[aIdx];
-    for (size_t i = 0; i < controller_info.mButtons.size(); i++) {
+    for (size_t i = 0; i < mData.mButtons.size(); i++) {
         QHBoxLayout* h_box = new QHBoxLayout;
 
         auto label = new QLabel(controller_info.mButtonNames.at(i).c_str());
+
         auto key_button = new QPushButton;
+        const auto button_key = mData.mButtons[i];
+        if (button_key != Qt::Key_unknown) {
+            const auto text = QKeySequence(button_key).toString();
+            key_button->setText(text);
+        }
         key_button->installEventFilter(this);
+        key_button->setProperty("index", static_cast<int>(i));
         connect(key_button, &QPushButton::clicked, this, &KeybindWindow::HandleKeyListenPressed);
 
         h_box->addWidget(label);
@@ -74,5 +97,6 @@ void KeybindWindow::PopulateControllers() {
     for (const auto& type : ControllerTable) {
         mUi->controllerComboBox->addItem(type.mName.c_str());
     }
-    LoadControllerLayout(0);
+    mUi->controllerComboBox->setCurrentIndex(static_cast<int>(mData.mType));
+    LoadControllerLayout();
 }

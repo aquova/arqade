@@ -22,6 +22,7 @@ HEADERS += \
     Arqade.hpp \
     ArqadeWindow.hpp \
     AudioPlayer.hpp \
+    ControllerData.hpp \
     Core.hpp \
     CoreData.hpp \
     Database.hpp \
