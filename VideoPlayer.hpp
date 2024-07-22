@@ -4,11 +4,13 @@
 #include <string>
 #include <vector>
 
+#include <Qt>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
 
+#include "Database.hpp"
 #include "libretro.hpp"
 
 enum class Hotkey {
@@ -21,7 +23,7 @@ enum class Hotkey {
 
 class VideoPlayer {
     public:
-        VideoPlayer(const int aWidth, const int aHeight, const int aScale);
+        VideoPlayer(const int aWidth, const int aHeight, const int aScale, const ControllerMapType aBindings);
         ~VideoPlayer();
         Hotkey HandleInput();
         void Render(const std::vector<uint8_t> &aBuffer, const PixelFormat aFormat);
@@ -30,12 +32,14 @@ class VideoPlayer {
     private:
         Hotkey HandleButton(const SDL_Keycode aKey, const bool aPressed);
 
-        int mHeight;
         int mWidth;
+        int mHeight;
         int mScale;
-        SDL_Window* mWindow{nullptr};
+        int mGuiTab;
+        ControllerMapType mBindings;
         SDL_Renderer* mRenderer{nullptr};
         SDL_Texture* mTexture{nullptr};
+        SDL_Window* mWindow{nullptr};
 };
 
 #endif

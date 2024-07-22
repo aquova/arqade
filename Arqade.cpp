@@ -6,6 +6,7 @@
 #include "AudioPlayer.hpp"
 #include "Core.hpp"
 #include "CoreData.hpp"
+#include "Database.hpp"
 #include "VideoPlayer.hpp"
 
 // TODO: These shouldn't be hardcoded
@@ -19,10 +20,10 @@ static constexpr auto SCALE = 3;
 static constexpr auto FPS = 60.0;
 static constexpr auto FRAME_DELAY = 1000.0 / FPS;
 
-void Arqade::RunEmu(QString aRomPath, QString aCorePath) {
+void Arqade::RunEmu(QString aRomPath, QString aCorePath, ControllerMapType aBindings) {
     Core core(aRomPath.toStdString(), aCorePath.toStdString());
     AudioPlayer audio_player;
-    VideoPlayer video_player(WIDTH, HEIGHT, SCALE);
+    VideoPlayer video_player(WIDTH, HEIGHT, SCALE, aBindings);
 
     while (true) {
         const auto frame_start = SDL_GetTicks();

@@ -15,6 +15,7 @@ static constexpr auto LIBRETRO_CORE_PATH = "/usr/lib/libretro/";
 
 ArqadeWindow::ArqadeWindow(QWidget *parent): QMainWindow(parent), mUi(new Ui::ArqadeWindow) {
     mUi->setupUi(this);
+    qRegisterMetaType<ControllerMapType>("ControllerMapType"); // Needed in order to use ControllerMapType items in signals/slots
     mEmulator = new Arqade;
     mEmuThread = new QThread;
     mEmulator->moveToThread(mEmuThread);
@@ -97,5 +98,6 @@ void ArqadeWindow::RunSelectedGame() {
     const auto rom_name = current_tab->GetSelectedGame();
     const auto abs_path = dir_path / rom_name;
     const auto core_path = current_tab->GetSelectedCore();
-    emit RunEmu(abs_path.c_str(), core_path.c_str());
+    const auto bindings = DbGetMap(mUi->tabWidget->currentIndex());
+    emit RunEmu(abs_path.c_str(), core_path.c_str(), bindings);
 }

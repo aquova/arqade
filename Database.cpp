@@ -84,6 +84,34 @@ ControllerType DbGetControllerType(const int aTab) {
     return type;
 }
 
+ControllerMapType DbGetMap(const int aTab) {
+    ControllerMapType map;
+    const auto db_path = GetDatabasePath();
+    auto db = QSqlDatabase::database();
+    if (!db.open()) {
+        std::cerr << "Unable to open database " << db.lastError().text().toStdString() << std::endl;
+        return map;
+    }
+
+    QSqlQuery query;
+    query.prepare("SELECT controller, keys FROM tabs WHERE id = :id");
+    query.bindValue(":id", QVariant(aTab));
+    query.exec();
+    if (query.next()) {
+        const auto controller_idx = query.value(0).toInt();
+        const auto buttons = ControllerTable[controller_idx].mButtons;
+        const auto raw_keybinds = query.value(1).toString().toStdString();
+        const auto vec = DeserializeController(raw_keybinds, buttons.size());
+
+        for (size_t i = 0; i < buttons.size(); i++) {
+            map[vec[i]] = buttons[i];
+        }
+    }
+
+    db.close();
+    return map;
+}
+
 std::vector<Qt::Key> DbGetKeybind(const int aTab, const ControllerType aType) {
     const auto type_int = static_cast<int>(aType);
     std::vector<Qt::Key> vec(ControllerTable[type_int].mButtons.size(), Qt::Key_unknown);

@@ -2,11 +2,14 @@
 #define DATABASE_HPP
 
 #include <filesystem>
+#include <unordered_map>
 #include <vector>
 
 #include <Qt>
 
 #include "ControllerData.hpp"
+
+typedef std::unordered_map<Qt::Key, JoypadButton> ControllerMapType;
 
 struct TabData {
     int mId;
@@ -19,6 +22,7 @@ void DbDeleteTab(const int aIdx);
 std::vector<TabData> DbGetAllTabs();
 ControllerType DbGetControllerType(const int aTab);
 std::vector<Qt::Key> DbGetKeybind(const int aTab, const ControllerType aType);
+ControllerMapType DbGetMap(const int aTab);
 std::filesystem::path GetConfigDir();
 std::filesystem::path GetDatabasePath();
 void DbInitialize();

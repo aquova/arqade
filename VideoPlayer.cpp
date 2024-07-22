@@ -9,6 +9,7 @@
 #include <SDL2/SDL_video.h>
 
 #include "CoreData.hpp"
+#include "Database.hpp"
 #include "Utils.hpp"
 
 static std::vector<uint8_t> ConvertPixelFormat(const std::vector<uint8_t> &aData, const PixelFormat aFormat) {
@@ -32,7 +33,7 @@ static std::vector<uint8_t> ConvertPixelFormat(const std::vector<uint8_t> &aData
     }
 }
 
-VideoPlayer::VideoPlayer(const int aWidth, const int aHeight, const int aScale) : mWidth(aWidth), mHeight(aHeight), mScale(aScale) {
+VideoPlayer::VideoPlayer(const int aWidth, const int aHeight, const int aScale, const ControllerMapType aBindings) : mWidth(aWidth), mHeight(aHeight), mScale(aScale), mBindings(aBindings) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cerr << "Unable to initialize video\n";
     }
@@ -50,77 +51,9 @@ VideoPlayer::~VideoPlayer() {
 }
 
 Hotkey VideoPlayer::HandleButton(const SDL_Keycode aKey, const bool aPressed) {
-    auto button = JoypadButton::COUNT;
-    // TODO: Don't make this hardcoded
-    switch (aKey) {
-        case SDLK_UP:
-            button = JoypadButton::UP;
-            break;
-
-        case SDLK_DOWN:
-            button = JoypadButton::DOWN;
-            break;
-
-        case SDLK_LEFT:
-            button = JoypadButton::LEFT;
-            break;
-
-        case SDLK_RIGHT:
-            button = JoypadButton::RIGHT;
-            break;
-
-        case SDLK_z:
-            button = JoypadButton::SOUTH;
-            break;
-
-        case SDLK_x:
-            button = JoypadButton::EAST;
-            break;
-
-        case SDLK_s:
-            button = JoypadButton::NORTH;
-            break;
-
-        case SDLK_a:
-            button = JoypadButton::WEST;
-            break;
-
-        case SDLK_q:
-            button = JoypadButton::L;
-            break;
-
-        case SDLK_w:
-            button = JoypadButton::R;
-            break;
-
-        case SDLK_RETURN:
-            button = JoypadButton::START;
-            break;
-
-        case SDLK_BACKSPACE:
-            button = JoypadButton::SELECT;
-            break;
-
-        case SDLK_F5:
-            if (aPressed) {
-                return Hotkey::SaveState;
-            }
-            break;
-
-        case SDLK_F9:
-            if (aPressed) {
-                return Hotkey::LoadState;
-            }
-            break;
-
-        default:
-            break;
-    }
-
-    if (button != JoypadButton::COUNT) {
-        CoreData::getInstance().SetButtonPress(button, aPressed);
-    }
-
+    const auto qt = SDL2Qt(aKey);
+    const auto button = mBindings.at(qt); // TODO: Need to catch this exception
+    CoreData::getInstance().SetButtonPress(button, aPressed);
     return Hotkey::None;
 }
 

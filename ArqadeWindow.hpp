@@ -23,7 +23,7 @@ class ArqadeWindow : public QMainWindow {
         ~ArqadeWindow();
 
     signals:
-        void RunEmu(const QString &aRomPath, const QString &aCorePath);
+        void RunEmu(const QString &aRomPath, const QString &aCorePath, const ControllerMapType aBindings);
 
     private slots:
         void HandleAddTabPressed();
