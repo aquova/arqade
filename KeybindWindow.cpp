@@ -35,8 +35,17 @@ bool KeybindWindow::eventFilter(QObject* aObject, QEvent* aEvent) {
             mPressedButton->setText(txt);
             mPressedButton->removeEventFilter(this);
             const auto index = mPressedButton->property("index").toInt();
-            mData.mButtons[index] = static_cast<Qt::Key>(key_event->key());
+            const auto key = static_cast<Qt::Key>(key_event->key());
+            // Prevent duplicate button bindings
+            for (auto& button : mData.mButtons) {
+                if (button == key) {
+                    button = Qt::Key_unknown;
+                    break;
+                }
+            }
+            mData.mButtons[index] = key;
             mPressedButton = nullptr;
+            LoadControllerLayout();
             return true;
         }
     }
@@ -45,7 +54,7 @@ bool KeybindWindow::eventFilter(QObject* aObject, QEvent* aEvent) {
 
 void KeybindWindow::HandleControllerChanged(int aIdx) {
     mData.mType = static_cast<ControllerType>(aIdx);
-    mData.mButtons.clear();
+    mData.mButtons = DbGetKeybind(mTabIndex, mData.mType);
     LoadControllerLayout();
 }
 
@@ -63,7 +72,6 @@ void KeybindWindow::HandleSaveButtonPressed() {
 }
 
 void KeybindWindow::LoadControllerLayout() {
-    mData.mButtons = DbGetKeybind(mTabIndex, mData.mType);
     const auto controller_info = ControllerTable[static_cast<int>(mData.mType)];
 
     QWidget* controller_widget = new QWidget;
@@ -98,5 +106,6 @@ void KeybindWindow::PopulateControllers() {
         mUi->controllerComboBox->addItem(type.mName.c_str());
     }
     mUi->controllerComboBox->setCurrentIndex(static_cast<int>(mData.mType));
+    mData.mButtons = DbGetKeybind(mTabIndex, mData.mType);
     LoadControllerLayout();
 }
