@@ -32,16 +32,8 @@ PixelFormat CoreData::GetPixelFormat() {
     return mPixelFormat;
 }
 
-uint CoreData::GetScreenHeight() {
-    return mScreenHeight;
-}
-
-size_t CoreData::GetScreenPitch() {
-    return mScreenPitch;
-}
-
-uint CoreData::GetScreenWidth() {
-    return mScreenWidth;
+ScreenParams CoreData::GetScreenParams() {
+    return mScreenParams;
 }
 
 bool CoreData::IsButtonPressed(const JoypadButton aButton) {
@@ -74,9 +66,9 @@ void CoreData::SetPixelFormat(const PixelFormat aFormat) {
 }
 
 void CoreData::SetScreenParams(const uint aWidth, const uint aHeight, const size_t aPitch) {
-    mScreenWidth = aWidth;
-    mScreenHeight = aHeight;
-    mScreenPitch = aPitch;
+    mScreenParams.mWidth = aWidth;
+    mScreenParams.mHeight = aHeight;
+    mScreenParams.mPitch = aPitch;
 }
 
 void CoreData::SetVideoData(std::vector<uint8_t> aData) {

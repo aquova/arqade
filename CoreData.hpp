@@ -8,6 +8,12 @@
 
 #include "libretro.hpp"
 
+struct ScreenParams {
+    int mWidth;
+    int mHeight;
+    size_t mPitch;
+};
+
 class CoreData {
     public:
         static CoreData& getInstance() {
@@ -20,9 +26,7 @@ class CoreData {
         AvInfo GetAvInfo();
         int GetBytesPerPixel();
         PixelFormat GetPixelFormat();
-        size_t GetScreenPitch();
-        uint GetScreenHeight();
-        uint GetScreenWidth();
+        ScreenParams GetScreenParams();
         std::vector<uint8_t> GetVideoData();
         bool IsButtonPressed(const JoypadButton aButton);
         void Reset();
@@ -44,9 +48,7 @@ class CoreData {
         AvInfo mAvInfo;
         std::array<bool, static_cast<int>(JoypadButton::COUNT)> mButtons;
         PixelFormat mPixelFormat{PixelFormat::UNKNOWN};
-        uint mScreenHeight{0};
-        size_t mScreenPitch{0};
-        uint mScreenWidth{0};
+        ScreenParams mScreenParams;
 
         std::vector<int16_t> mAudioData;
         std::vector<uint8_t> mVideoData;

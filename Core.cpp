@@ -53,11 +53,9 @@ void SetVideoRefreshCallback(void* aData, uint aWidth, uint aHeight, size_t aPit
     }
 
     CoreData& core_data = CoreData::getInstance();
-    // Is this needed?
     core_data.SetScreenParams(aWidth, aHeight, aPitch);
     std::vector<uint8_t> data_vec;
-    const auto bytes_per_pixel = core_data.GetBytesPerPixel();
-    const auto buffer_len = aPitch * aHeight * bytes_per_pixel;
+    const auto buffer_len = aPitch * aHeight;
     const auto buffer_data = static_cast<uint8_t*>(aData);
 
     data_vec.insert(data_vec.end(), &buffer_data[0], &buffer_data[buffer_len]);
