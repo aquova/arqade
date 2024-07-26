@@ -24,6 +24,7 @@ void Arqade::RunEmu(QString aRomPath, QString aCorePath, ControllerMapType aBind
     Core core(aRomPath.toStdString(), aCorePath.toStdString());
     AudioPlayer audio_player;
     VideoPlayer video_player(WIDTH, HEIGHT, SCALE, aBindings);
+    CoreData::getInstance().Reset();
 
     while (true) {
         const auto frame_start = SDL_GetTicks();

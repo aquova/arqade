@@ -48,6 +48,11 @@ bool CoreData::IsButtonPressed(const JoypadButton aButton) {
     return mButtons[static_cast<int>(aButton)];
 }
 
+void CoreData::Reset() {
+    mAudioData.clear();
+    mVideoData.clear();
+}
+
 std::vector<uint8_t> CoreData::GetVideoData() {
     return mVideoData;
 }

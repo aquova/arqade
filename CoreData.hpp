@@ -25,6 +25,7 @@ class CoreData {
         uint GetScreenWidth();
         std::vector<uint8_t> GetVideoData();
         bool IsButtonPressed(const JoypadButton aButton);
+        void Reset();
         void SetAudioData(std::vector<int16_t> aData);
         void SetAvInfo(AvInfo aAvInfo);
         void SetButtonPress(const JoypadButton aButton, const bool aPressed);
