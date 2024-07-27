@@ -20,6 +20,7 @@ class SystemTab :  public QWidget {
     public:
         SystemTab(QWidget *aParent, const TabData aData, const std::vector<std::string> aCores);
         ~SystemTab();
+        int GetId();
         std::string GetSelectedCore();
         std::string GetSelectedGame();
         std::string GetTabFolder();

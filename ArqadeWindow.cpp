@@ -60,7 +60,7 @@ void ArqadeWindow::CreateConfig() {
 
 void ArqadeWindow::CreateEmptyTab() {
     const auto new_tab = TabData {
-        mUi->tabWidget->count(),
+        DbGetNextId(),
         "NEW",
         mCores[0],
         ""
@@ -73,7 +73,9 @@ void ArqadeWindow::HandleAddTabPressed() {
 }
 
 void ArqadeWindow::HandleDeleteTabPressed() {
+    const auto tabIdx = qobject_cast<SystemTab*>(mUi->tabWidget->currentWidget())->GetId();
     mUi->tabWidget->removeTab(mUi->tabWidget->currentIndex());
+    DbDeleteTab(tabIdx);
 }
 
 void ArqadeWindow::HandleUpdateTitle(QString aTitle) {

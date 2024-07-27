@@ -23,6 +23,7 @@ std::vector<TabData> DbGetAllTabs();
 ControllerType DbGetControllerType(const int aTab);
 std::vector<Qt::Key> DbGetKeybind(const int aTab, const ControllerType aType);
 ControllerMapType DbGetMap(const int aTab);
+int DbGetNextId();
 std::filesystem::path GetConfigDir();
 std::filesystem::path GetDatabasePath();
 void DbInitialize();

@@ -28,6 +28,10 @@ SystemTab::~SystemTab() {
     delete mTab;
 }
 
+int SystemTab::GetId() {
+    return mData.mId;
+}
+
 std::string SystemTab::GetSelectedCore() {
     return mTab->coreBox->currentText().toStdString();
 }

@@ -137,6 +137,26 @@ std::vector<Qt::Key> DbGetKeybind(const int aTab, const ControllerType aType) {
     return vec;
 }
 
+int DbGetNextId() {
+    // TODO: The IDs will meaninglessly continue to climb. Someday try and fill the holes.
+    const auto db_path = GetDatabasePath();
+    auto db = QSqlDatabase::database();
+    if (!db.open()) {
+        std::cerr << "Unable to open database " << db.lastError().text().toStdString() << std::endl;
+        return 0;
+    }
+
+    int id = 0;
+    QSqlQuery query;
+    query.prepare("SELECT MAX(id) FROM tabs");
+    query.exec();
+    if (query.next()) {
+        id = query.value(0).toInt() + 1;
+    }
+    db.close();
+    return id;
+}
+
 static std::vector<Qt::Key> DeserializeController(const std::string aInput, const int aLen) {
     std::vector<Qt::Key> vec(aLen, Qt::Key_unknown);
 
