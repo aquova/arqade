@@ -1,6 +1,7 @@
 #include "VideoPlayer.hpp"
 
 #include <cstring>
+#include <exception>
 #include <iostream>
 
 #include <SDL2/SDL_events.h>
@@ -124,8 +125,12 @@ VideoPlayer::~VideoPlayer() {
 
 Hotkey VideoPlayer::HandleButton(const SDL_Keycode aKey, const bool aPressed) {
     const auto qt = SDL2Qt(aKey);
-    const auto button = mBindings.at(qt); // TODO: Need to catch this exception
-    CoreData::getInstance().SetButtonPress(button, aPressed);
+    try {
+        const auto button = mBindings.at(qt);
+        CoreData::getInstance().SetButtonPress(button, aPressed);
+    } catch (const std::exception& e) {
+        // Unset key was pressed, do nothing
+    }
     return Hotkey::None;
 }
 
