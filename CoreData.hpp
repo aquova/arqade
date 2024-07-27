@@ -24,7 +24,6 @@ class CoreData {
         void EraseAudioData(const size_t aLength);
         std::vector<int16_t> GetAudioData();
         AvInfo GetAvInfo();
-        int GetBytesPerPixel();
         PixelFormat GetPixelFormat();
         ScreenParams GetScreenParams();
         std::vector<uint8_t> GetVideoData();

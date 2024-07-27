@@ -13,21 +13,6 @@ AvInfo CoreData::GetAvInfo() {
     return mAvInfo;
 }
 
-int CoreData::GetBytesPerPixel() {
-    switch (mPixelFormat) {
-        case PixelFormat::XRGB8888:
-            return 4;
-
-        case PixelFormat::RGB565:
-        case PixelFormat::RGB1555:
-            return 2;
-
-        case PixelFormat::UNKNOWN:
-        default:
-            return 0;
-    }
-}
-
 PixelFormat CoreData::GetPixelFormat() {
     return mPixelFormat;
 }
