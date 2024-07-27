@@ -157,6 +157,7 @@ Hotkey VideoPlayer::HandleInput() {
 }
 
 void VideoPlayer::Render(const std::vector<uint8_t> &aBuffer, const PixelFormat aFormat) {
+    Resize();
     const auto screen_params = CoreData::getInstance().GetScreenParams();
     const auto bytes_per_pixel = GetBytesPerPixel(aFormat);
 
@@ -172,9 +173,19 @@ void VideoPlayer::Render(const std::vector<uint8_t> &aBuffer, const PixelFormat 
     std::memcpy(pixels, converted.data(), converted.size());
     SDL_UnlockTexture(mTexture);
 
-    SDL_Rect source_rect{0, 0, mWidth, mHeight};
+    SDL_Rect source_rect{0, 0, static_cast<int>(mWidth), static_cast<int>(mHeight)};
     SDL_RenderCopy(mRenderer, mTexture, &source_rect, nullptr);
     SDL_RenderPresent(mRenderer);
+}
+
+void VideoPlayer::Resize() {
+    const auto av_info = CoreData::getInstance().GetAvInfo();
+    if (av_info.mGeometry.mBaseWidth != mWidth || av_info.mGeometry.mBaseHeight != mHeight) {
+        mWidth = av_info.mGeometry.mBaseWidth;
+        mHeight = av_info.mGeometry.mBaseHeight;
+        SDL_SetWindowSize(mWindow, mWidth * mScale, mHeight * mScale);
+        // TODO: Change texture size?
+    }
 }
 
 void VideoPlayer::SetTitle(const std::string aTitle) {

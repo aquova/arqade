@@ -8,8 +8,11 @@
 #include <climits>
 #include <cstddef>
 
+constexpr auto RETRO_ENV_GET_OVERSCAN = 2;
 constexpr auto RETRO_ENV_GET_CAN_DUPE = 3;
 constexpr auto RETRO_ENV_SET_PIXEL_FORMAT = 10;
+constexpr auto RETRO_ENV_GET_VARIABLE_UPDATE = 17;
+constexpr auto RETRO_ENV_SET_GEOMETRY = 37;
 
 constexpr auto RETRO_MEMORY_SAVE_RAM = 0;
 

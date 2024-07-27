@@ -29,6 +29,10 @@ typedef void (*RetroSetAudioSampleBatchType)(SetAudioSampleBatchCallbackType aCa
 
 bool SetEnvCallback(uint aCommand, void* aData) {
     switch (aCommand) {
+        case RETRO_ENV_GET_OVERSCAN:
+            *static_cast<bool*>(aData) = false;
+            break;
+
         case RETRO_ENV_GET_CAN_DUPE:
             *static_cast<bool*>(aData) = true;
             break;
@@ -39,8 +43,21 @@ bool SetEnvCallback(uint aCommand, void* aData) {
             return true;
         }
 
+        case RETRO_ENV_GET_VARIABLE_UPDATE:
+            *static_cast<bool*>(aData) = true;
+            break;
+
+        case RETRO_ENV_SET_GEOMETRY: {
+            GameGeometry geo = *static_cast<GameGeometry*>(aData);
+            CoreData& core_data = CoreData::getInstance();
+            auto av_info = core_data.GetAvInfo();
+            av_info.mGeometry = geo;
+            core_data.SetAvInfo(av_info);
+            return true;
+        }
+
         default:
-            // std::cout << aCommand << '\n';
+            std::cout << aCommand << std::endl;
             break;
     }
     return false;

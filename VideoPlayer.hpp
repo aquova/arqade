@@ -31,9 +31,10 @@ class VideoPlayer {
 
     private:
         Hotkey HandleButton(const SDL_Keycode aKey, const bool aPressed);
+        void Resize();
 
-        int mWidth;
-        int mHeight;
+        unsigned int mWidth;
+        unsigned int mHeight;
         int mScale;
         int mGuiTab;
         ControllerMapType mBindings;
